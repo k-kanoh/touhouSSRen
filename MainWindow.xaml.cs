@@ -30,7 +30,7 @@ namespace touhouSSRen
                 var fnames = (string[])e.Data.GetData(DataFormats.FileDrop);
 
                 if (Directory.Exists(fnames[0]))
-                    fnames = Directory.GetFiles(fnames[0], "*.bmp");
+                    fnames = Directory.GetFiles(fnames[0]);
 
                 var dir = Path.GetDirectoryName(fnames[0]);
                 var num = 0;
@@ -41,14 +41,14 @@ namespace touhouSSRen
 
                     if (res.Success)
                     {
-                        var dest = Path.Combine(dir!, $"{res.Groups[1].Value}{num++:000}.bmp");
+                        var dest = Path.Combine(dir!, $"{res.Groups[1].Value}{num++:000}.{res.Groups[2].Value}");
                         File.Move(fname, dest);
                     }
                 }
             };
         }
 
-        [GeneratedRegex(@"(th[0-9_]*?)[0-9]{3,}\.bmp$")]
+        [GeneratedRegex(@"(th[0-9_]*?)[0-9]{3,}\.(bmp|png)$")]
         private static partial Regex FnPattern();
     }
 }
